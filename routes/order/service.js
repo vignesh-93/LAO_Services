@@ -1,7 +1,9 @@
 const service = require("../../lib/http/invoke");
 var MongoClient = require("mongodb").MongoClient;
  
-  ObjectId = require("mongodb").ObjectID;
+const ObjectId = require("mongodb").ObjectID;
+
+
 
 let getordercount = async() => {
     try {
@@ -140,8 +142,6 @@ let getCart = async(id) => {
 
   let getmyorderdetails = async(inputdata) => {
     try {
-
-console.log(inputdata)
 
 var postdata = {
   url: process.env.DB_URL,

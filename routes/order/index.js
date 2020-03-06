@@ -2,6 +2,7 @@ module.exports = function (params) {
     var app = params.app;
     const orderService = require("./service");
 
+
     var datetime = new Date();
 
     //Create Order
@@ -106,10 +107,9 @@ module.exports = function (params) {
                
                 grandTotal += orderdata.products[i].totalPrice
 
-
-                console.log(orderdata.products[i]._id)
-               
                 var getCart = await orderService.getCart(orderdata.products[i]._id);
+
+                console.log(getCart)
                 
 
                 getCart.qty=orderdata.products[i].qty
@@ -125,8 +125,6 @@ module.exports = function (params) {
 
             orderdata.grandTotal = grandTotal;
             orderdata.createdOn = datetime;
-
-
 
             var saveorder = await orderService.saveorder(orderdata);
             console.log("hai")
@@ -221,8 +219,6 @@ module.exports = function (params) {
   
           var getorders = await orderService.getmyorderdetails(req.query.mobile);
 
-          console.log(getorders)
-
           if(getorders.length>0)
           {
           res.send({
@@ -274,7 +270,7 @@ module.exports = function (params) {
 
                 getorders[0].products[i].status.push(status)
 
-                var saveorder = await orderService.saveorder(getorders);
+                var saveorder = await orderService.saveorder(getorders[0]);
 
                 if (saveorder) {
                     res.send({
