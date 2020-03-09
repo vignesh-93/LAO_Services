@@ -255,11 +255,13 @@ module.exports = function (params) {
   
           var getorders = await orderService.getupdatedetail(req.body);
 
+
           if(getorders.length>0)
           {
 
            for(let i=0;i<getorders[0].products.length;i++)
            {
+
 
             if(getorders[0].products[i]._id===req.body.productid)
             {
