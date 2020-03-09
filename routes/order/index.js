@@ -374,7 +374,7 @@ module.exports = function (params) {
       }
     });
 
-   //  
+   // Find Specified Order Details
 
    app.get("/getSpecifiedOrder", async (req, res) => {
     "use strict";
@@ -401,6 +401,25 @@ module.exports = function (params) {
           "message":"No Orders Found"
           })
         }  
+    
+    } catch (err) {
+
+      res.send({
+        "code":400,
+        "result":"NOT SUCCESS",
+        "message":err
+        })
+    }
+  });
+
+
+  // Billing Screen
+
+  app.get("/getBillingScreen", async (req, res) => {
+    "use strict";
+    try {
+
+      
     
     } catch (err) {
 

@@ -313,6 +313,29 @@ return data.data.statusMessage;
       query: [
 
         {$match:{"laoOrderId":inputdata}},
+
+    {
+        $lookup:
+        {
+          from: 'LAO_Retailer_Details',
+          localField: 'mobile',
+          foreignField: 'mobile',
+          as: 'Retailer_Details'
+        }
+    },
+    
+    {$unwind:"$Retailer_Details"},
+
+        { "$project": 
+               {      
+                      "laoOrderId" : "$laoOrderId",
+                      "Mobile" : "$mobile",
+                      "Retailer Name" : "$Retailer_Details.name",
+                      "Retailer OutletName":"$Retailer_Details.outletName",
+                      "Retailer ShopAddress":"$Retailer_Details.shopAddress",
+                      "products" : "$products"
+                }
+          }
      
         ]
     };
