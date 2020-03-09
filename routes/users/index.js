@@ -56,6 +56,8 @@ module.exports = function(params) {
 
         if(Retailerlogin.length>0)
         {
+
+          
         
           res.send({
           "code":200,
@@ -85,7 +87,69 @@ module.exports = function(params) {
       }
     });
   
+  // Edit Retailer
+
+    app.post("/editretailer", async (req, res) => {
+      "use strict";
+      try {
+
+        var getRetailerData = await userService.updateRetailer(req.body._id);
+
+        // console.log(getRetailerData)
+
+        if(getRetailerData.length !== null)
+        {
+
+          getRetailerData.name=req.body.name;
+          getRetailerData.mobile=req.body.mobile;
+          getRetailerData.outletName=req.body.outletName;
+          getRetailerData.shopAddress=req.body.shopAddress;
+          getRetailerData.city=req.body.city;
+          getRetailerData.state=req.body.state;
+          getRetailerData.zipcode=req.body.zipcode;
+          getRetailerData.email=req.body.email;
+
+          var updateRetailer = await userService.saveDetails(getRetailerData);
+
+          // console.log(updateRetailer)
+
+          if(updateRetailer)
+          {
+          res.send({
+            "code":200,
+            "result":"SUCCESS",
+            "message":"Update Success"
+            })
+          }
+          else
+          {
+          res.send({
+            "code":400,
+            "result":"NOT SUCCESS"
+            })
+          }
+       
+        } 
+        else
+        {
+
+          res.send({
+            "code":400,
+            "result":"NOT SUCCESS",
+            "message":"No Retailer Found"
+            })
+          }
+
+        
+      } catch (err) {
   
-    
+        res.send({
+          "code":400,
+          "result":"NOT SUCCESS",
+          "ERROR":err
+          })
+      }
+    });
+
   };
   
