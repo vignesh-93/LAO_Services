@@ -83,13 +83,17 @@ app.post("/addtocart", async (req, res) => {
     try {
 
       var viewCart = await cartService.viewCart(req.query);
+      var address = await cartService.getwholesaleraddress(viewCart[0].wholesaler);
+
+     
 
       if(viewCart.length>0)
       {
       res.send({
         "code":200,
         "result":"SUCCESS",
-        "message":viewCart
+        "message":viewCart,
+        "WholesalerAddress":address
         })
       }
       else
