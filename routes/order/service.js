@@ -94,7 +94,7 @@ let getCart = async(id) => {
 
       var postdata = {
         url: process.env.DB_URL,
-        client: "LAO_Retailer_Details",
+        client: "LAO_Order",
         docType: 1,
         query: [
 
