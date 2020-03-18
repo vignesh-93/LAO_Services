@@ -49,6 +49,7 @@ let viewCart = async(inputData) => {
 
         { $match: { $and: toQueryData } }, 
         
+        
        { $addFields: { createdDate: {$dateFromString: {dateString: "$createdOn" } } } },
 
         {$project:{

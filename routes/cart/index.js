@@ -82,8 +82,10 @@ app.post("/addtocart", async (req, res) => {
     "use strict";
     try {
 
-      var viewCart = await cartService.viewCart(req.query);
+      console.log(req.query)
 
+      var viewCart = await cartService.viewCart(req.query);
+      
       if(viewCart.length>0)
       {
       res.send({
@@ -156,6 +158,24 @@ app.post("/addtocart", async (req, res) => {
           })
       }
     });
+
+      // Billing Screen
+
+  app.get("/getBillingScreen", async (req, res) => {
+    "use strict";
+    try {
+
+      
+    
+    } catch (err) {
+
+      res.send({
+        "code":400,
+        "result":"NOT SUCCESS",
+        "message":err
+        })
+    }
+  });
 
  
   };

@@ -302,7 +302,6 @@ return data.data.statusMessage;
 
  // 
 
-
  let getSpecifiedOrder = async(inputdata) => {
   try {
 
@@ -330,9 +329,9 @@ return data.data.statusMessage;
                {      
                       "laoOrderId" : "$laoOrderId",
                       "Mobile" : "$mobile",
-                      "Retailer Name" : "$Retailer_Details.name",
-                      "Retailer OutletName":"$Retailer_Details.outletName",
-                      "Retailer ShopAddress":"$Retailer_Details.shopAddress",
+                      "retailerName" : "$Retailer_Details.name",
+                      "retailerOutletName":"$Retailer_Details.outletName",
+                      "retailerShopAddress":"$Retailer_Details.shopAddress",
                       "products" : "$products"
                 }
           }
