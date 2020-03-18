@@ -306,7 +306,7 @@ return data.data.statusMessage;
 
  // 
 
- let getSpecifiedOrder = async(inputdata) => {
+ let getSpecifiedOrder = async(lao_id,product_id) => {
   try {
 
     var postdata = {
@@ -315,7 +315,11 @@ return data.data.statusMessage;
       docType: 1,
       query: [
 
-        {$match:{"laoOrderId":inputdata}},
+        {$match:{"laoOrderId":lao_id}},
+
+        {$unwind:"$products"},
+        
+        {$match:{"products._id":product_id}},
 
     {
         $lookup:

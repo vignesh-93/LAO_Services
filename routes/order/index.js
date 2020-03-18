@@ -382,7 +382,11 @@ module.exports = function (params) {
     "use strict";
     try {
 
-      var getSpecifiedOrder = await orderService.getSpecifiedOrder(req.query.laoOrderId);
+      // console.log(req.query.laoOrderId,"########")
+
+      // console.log(req.query.productid,"@@@@@@@@@")
+
+      var getSpecifiedOrder = await orderService.getSpecifiedOrder(req.query.laoOrderId,req.query.productid);
 
       // console.log(getSpecifiedOrder,"33333333")
 
