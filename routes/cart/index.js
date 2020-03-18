@@ -82,7 +82,10 @@ app.post("/addtocart", async (req, res) => {
     "use strict";
     try {
 
-      console.log(req.query)
+      var viewCart = await cartService.viewCart(req.query);
+      var address = await cartService.getwholesaleraddress(viewCart[0].wholesaler);
+
+     
 
       var viewCart = await cartService.viewCart(req.query);
       
@@ -91,7 +94,8 @@ app.post("/addtocart", async (req, res) => {
       res.send({
         "code":200,
         "result":"SUCCESS",
-        "message":viewCart
+        "message":viewCart,
+        "WholesalerAddress":address
         })
       }
       else

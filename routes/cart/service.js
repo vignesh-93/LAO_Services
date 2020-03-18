@@ -1,5 +1,7 @@
 const service = require("../../lib/http/invoke");
-const ObjectID = require("mongodb").ObjectID;
+var MongoClient = require("mongodb").MongoClient;
+ 
+  ObjectId = require("mongodb").ObjectID;
 
 
 let addtocart = async cartData => {
@@ -47,7 +49,8 @@ let viewCart = async(inputData) => {
    
         { $match: { status:"Active" }},
 
-        { $match: { $and: toQueryData } }, 
+        { $match: { $and: toQueryData } },
+
         
         
        { $addFields: { createdDate: {$dateFromString: {dateString: "$createdOn" } } } },
@@ -60,6 +63,7 @@ let viewCart = async(inputData) => {
           "totalPrice":"$totalPrice",
           "image":"$image",
           "wholesaler":"$wholesaler",
+         // "details":"$wholesalerdetails",
           "CreatedOn":{ $dateToString: { format: "%d-%m-%Y %H:%M", date: "$createdDate" } },   
         }}
     ]
@@ -117,10 +121,32 @@ let checkcart = async(sku,mobile) => {
 };
 
 
+let getwholesaleraddress = async(id) => {
+  try {
+
+    var postdata = {
+      url: process.env.DB_URL,
+      client: "LAO_Wholesaler_Details",
+      docType: 0,
+      query: {"_id": ObjectId(id)}
+    
+    }
+
+    let data = await service.makeHttpCall("post", "read", postdata);
+
+    return data.data.statusMessage;
+  } catch (err) {
+    return false;
+  }
+
+};
+
+
 module.exports = {
     addtocart,
     viewCart,
     getCart,
-    checkcart
+    checkcart,
+    getwholesaleraddress
     
 };

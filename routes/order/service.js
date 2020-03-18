@@ -94,36 +94,40 @@ let getCart = async(id) => {
 
       var postdata = {
         url: process.env.DB_URL,
-        client: "LAO_Retailer_Details",
+        client: "LAO_Order",
         docType: 1,
         query: [
 
-          {$match:{"wholesaler":inputdata}},
+          {$unwind:{path:"$products",preserveNullAndEmptyArrays: true}},
+
+
+{$match:{"products.wholesaler":inputdata}},
           
           {$lookup:{
-                    "from": "LAO_Order",
+                    "from": "LAO_Retailer_Details",
                     "localField": "mobile",
                     "foreignField": "mobile",
-                    "as": "orders"
+                    "as": "retailerDetails"
                   }},
-                  { $unwind: "$orders"},
-
-                  {$unwind:{path:"$orders.products",preserveNullAndEmptyArrays: true}},
                   
-                  { $addFields: { createdDate: {$dateFromString: {dateString: "$orders.createdOn"} } } },
+ {$unwind:{path:"$retailerDetails",preserveNullAndEmptyArrays: true}},
+
+                 
+                  
+                  { $addFields: { createdDate: {$dateFromString: {dateString: "$createdOn"} } } },
                   
                   {$project:{
                     
-                      "retailerName":"$name",
-                      "retailerMobile":"$mobile",
-                      "laoOrderId":"$orders.laoOrderId",
-                      "outletName":"$outletName",
-                      "shopAddress":"$shopAddress",
-                      "zipcode":"$zipcode",
+                      "retailerName":"$retailerDetails.name",
+                      "retailerMobile":"$retailerDetails.mobile",
+                      "laoOrderId":"$laoOrderId",
+                      "outletName":"$retailerDetails.outletName",
+                      "shopAddress":"$retailerDetails.shopAddress",
+                      "zipcode":"$retailerDetails.zipcode",
                       "orderCreatedDate":{ $dateToString: { format: "%d-%m-%Y %H:%M", date: "$createdDate" } }, 
-                      "orderValue":"$orders.grandTotal",
-                      "products":"$orders.products",
-                      "lastUpdatedStatus": { $slice: [ "$orders.products.status.message", -1 ] }
+                      "orderValue":"$grandTotal",
+                      "products":"$products",
+                      "lastUpdatedStatus": { $slice: [ "$products.status.message", -1 ] }
                    
                   }},
 
