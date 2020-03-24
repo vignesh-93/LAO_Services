@@ -10,7 +10,7 @@ let saveDetails = async retailerData => {
 
     retailerData.status="Active";
     retailerData.createdOn=datetime
-    
+     
 
     var postdata = {
       url: process.env.DB_URL,

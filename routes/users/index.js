@@ -24,11 +24,36 @@ module.exports = function(params) {
 
         if(saveRetailer)
         {
-        res.send({
-          "code":200,
-          "result":"SUCCESS"
+          process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+          let transporter = nodeMailer.createTransport({
+              service: 'Gmail',
+              auth: {
+                  user: 'vickyhbk93@gmail.com',
+                  pass: 'vignesh001'
+              }
           })
-        }
+          var mailOptions = {
+              from: 'vickyhbk93@gmail.com',
+              to: req.body.email,
+              subject: 'Retailer Verification',
+              text: 'Dear' + req.body.name + 
+              `<br>` + ' Click the link to verifiy your mail ID' + req.body.email + `<br>` 
+                        // + ' http://3.12.144.160/emailverify ',
+                        + ' http://localhost:4200/emailverify ',
+          };
+          // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&") 
+          transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                  console.log(error, "errrrrrrrrrrrrrrrr");
+              } else {
+                  console.log('Message Sent: ' + info.response);
+                  res.send({
+                    "code":200,
+                    "result":"SUCCESS"
+                    })
+              }
+          })
+      }
         else
         {
         res.send({
