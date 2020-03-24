@@ -84,7 +84,7 @@ app.post("/addtocart", async (req, res) => {
 
       var viewCart = await cartService.viewCart(req.query);
       var address = await cartService.getwholesaleraddress(viewCart[0].wholesaler);
-      
+
       if(viewCart.length>0)
       {
       res.send({

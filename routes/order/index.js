@@ -109,7 +109,7 @@ module.exports = function (params) {
 
                 var getCart = await orderService.getCart(orderdata.products[i]._id);
 
-                console.log(getCart)
+                // console.log(getCart)
                 
 
                 getCart.qty=orderdata.products[i].qty
@@ -127,7 +127,7 @@ module.exports = function (params) {
             orderdata.createdOn = datetime;
 
             var saveorder = await orderService.saveorder(orderdata);
-            console.log("hai")
+            // console.log("hai")
             if (saveorder) {
                 res.send({
                     "code": 200,
@@ -162,7 +162,7 @@ module.exports = function (params) {
 
           var getwholesaler = await orderService.getwholesaler(req.query.mobile);
 
-          console.log(getwholesaler)
+          // console.log(getwholesaler)
 
 
           if(getwholesaler.length>0)

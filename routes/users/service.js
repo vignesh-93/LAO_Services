@@ -84,7 +84,7 @@ let loginRetailer = async loginData => {
 let updateRetailer = async(id) => {
   try {
 
-    console.log(id)
+    // console.log(id)
 
     var postdata = {
       url: process.env.DB_URL,
