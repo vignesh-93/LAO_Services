@@ -9,7 +9,6 @@ let saveDetails = async retailerData => {
   try {
 
     retailerData.status="Active";
-    retailerData.emailVerifiedStatus = "false";
     retailerData.createdOn=datetime
      
 
@@ -106,7 +105,7 @@ let updateRetailer = async(id) => {
 let verifyEmail = async(email) => {
   try {
 
-    console.log(email,"email")
+    // console.log(email,"email")
 
     var postdata = {
       url: process.env.DB_URL,

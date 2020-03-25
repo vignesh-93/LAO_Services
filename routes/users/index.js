@@ -25,7 +25,8 @@ module.exports = function(params) {
 
           return false
         }
-       
+        
+        retailerData.emailVerifiedStatus = "false";
         var saveRetailer = await userService.saveDetails(req.body);
 
         // console.log(req.body,"req.body")
@@ -198,17 +199,17 @@ module.exports = function(params) {
 
         var getRetailerData = await userService.verifyEmail(req.body.email);
 
-        console.log(getRetailerData,"###############")
+        // console.log(getRetailerData,"###############")
 
         if(getRetailerData.length !== null)
         {
-          getRetailerData.emailVerifiedStatus = 'true';
+          getRetailerData.emailVerifiedStatus = "true";
 
-          console.log(getRetailerData,"$$$$$$$$$$$$$$$$$$$$")
+          // console.log(getRetailerData,"$$$$$$$$$$$$$$$$$$$$")
 
           var updateRetailer = await userService.saveDetails(getRetailerData);
 
-          console.log(updateRetailer,"**************")
+          // console.log(updateRetailer,"**************")
 
           if(updateRetailer)
           {
