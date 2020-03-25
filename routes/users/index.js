@@ -1,22 +1,19 @@
 module.exports = function(params) {
     var app = params.app;
     const userService = require("./service");
+    const nodeMailer = require("nodemailer");
    
   
     app.post("/saveretailer", async (req, res) => {
       "use strict";
 
-      console.log("hyyyy000000000")
-
       try {
 
-        console.log("hyyyy1111111111")
-
-        console.log(req.body.mobile,"req.body.mobile")
+        // console.log(req.body.mobile,"req.body.mobile")
 
         var checkRetailerExists = await userService.checkRetailer(req.body.mobile);
 
-        console.log(checkRetailerExists,"################")
+        // console.log(checkRetailerExists,"################")
 
         if(checkRetailerExists.length>0)
         {
@@ -31,10 +28,10 @@ module.exports = function(params) {
        
         var saveRetailer = await userService.saveDetails(req.body);
 
-        console.log(req.body,"req.body")
-        console.log(saveRetailer,"&&&&&&&&&&&&")
-        console.log(req.body.email,"req.body.email")
-        console.log(req.body.name,"req.body.name")
+        // console.log(req.body,"req.body")
+        // console.log(saveRetailer,"&&&&&&&&&&&&")
+        // console.log(req.body.email,"req.body.email")
+        // console.log(req.body.name,"req.body.name")
 
         if(saveRetailer)
         {
@@ -58,7 +55,7 @@ module.exports = function(params) {
                         // + ' http://3.12.144.160/emailverify ',
                         + ' http://localhost:4200/verify ',
           };
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") 
+          // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") 
           transporter.sendMail(mailOptions, function (error, info) {
               if (error) {
                   console.log(error, "errrrrrrrrrrrrrrrr");
@@ -84,7 +81,7 @@ module.exports = function(params) {
         res.send({
           "code":400,
           "result":"NOT SUCCESS",
-          "ERROR":"dd"
+          "ERROR":err
           })
       }
     });
