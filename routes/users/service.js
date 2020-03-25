@@ -9,6 +9,7 @@ let saveDetails = async retailerData => {
   try {
 
     retailerData.status="Active";
+    retailerData.emailVerifiedStatus = "false";
     retailerData.createdOn=datetime
      
 
