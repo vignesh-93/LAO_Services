@@ -5,9 +5,18 @@ module.exports = function(params) {
   
     app.post("/saveretailer", async (req, res) => {
       "use strict";
+
+      console.log("hyyyy000000000")
+
       try {
 
+        console.log("hyyyy1111111111")
+
+        console.log(req.body.mobile,"req.body.mobile")
+
         var checkRetailerExists = await userService.checkRetailer(req.body.mobile);
+
+        console.log(checkRetailerExists,"################")
 
         if(checkRetailerExists.length>0)
         {
@@ -22,11 +31,44 @@ module.exports = function(params) {
        
         var saveRetailer = await userService.saveDetails(req.body);
 
+        console.log(req.body,"req.body")
+        console.log(saveRetailer,"&&&&&&&&&&&&")
+        console.log(req.body.email,"req.body.email")
+        console.log(req.body.name,"req.body.name")
+
         if(saveRetailer)
         {
-        res.send({
-          "code":200,
-          "result":"SUCCESS"
+
+          // console.log(saveRetailer,"**********")
+
+          process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+          let transporter = nodeMailer.createTransport({
+              service: 'Gmail',
+              auth: {
+                  user: 'vickyhbk93@gmail.com',
+                  pass: 'vignesh001'
+              }
+          })
+          var mailOptions = {
+              from: 'vickyhbk93@gmail.com',
+              to: req.body.email,
+              subject: 'Retailer Verification',
+              text: 'Dear ' + req.body.name + 
+               ' click the link to verifiy your mailID ' + req.body.email  
+                        // + ' http://3.12.144.160/emailverify ',
+                        + ' http://localhost:4200/verify ',
+          };
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") 
+          transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                  console.log(error, "errrrrrrrrrrrrrrrr");
+              } else {
+                  console.log('Message Sent: ' + info.response);
+                  res.send({
+                    "code":200,
+                    "result":"SUCCESS"
+                    })
+              }
           })
         }
         else
@@ -42,11 +84,10 @@ module.exports = function(params) {
         res.send({
           "code":400,
           "result":"NOT SUCCESS",
-          "ERROR":err
+          "ERROR":"dd"
           })
       }
     });
-
 
     app.post("/retailerlogin", async (req, res) => {
       "use strict";
