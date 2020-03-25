@@ -103,9 +103,31 @@ let updateRetailer = async(id) => {
 
 };
 
+let verifyEmail = async(email) => {
+  try {
+
+    console.log(email,"email")
+
+    var postdata = {
+      url: process.env.DB_URL,
+      client: "LAO_Retailer_Details",
+      docType: 0,
+      query:{"email": email}
+    }
+
+    let data = await service.makeHttpCall("post", "read", postdata);
+
+    return data.data.statusMessage;
+  } catch (err) {
+    return false;
+  }
+
+};
+
 module.exports = {
     saveDetails,
     checkRetailer,
     loginRetailer,
-    updateRetailer
+    updateRetailer,
+    verifyEmail
 };

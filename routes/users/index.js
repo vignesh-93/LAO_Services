@@ -51,9 +51,9 @@ module.exports = function(params) {
               to: req.body.email,
               subject: 'Retailer Verification',
               text: 'Dear ' + req.body.name + 
-               ' click the link to verifiy your mailID ' + req.body.email  
+               ' click the link to verifiy your mailID '  
                         // + ' http://3.12.144.160/emailverify ',
-                        + ' http://localhost:4200/verify ',
+                        + ' http://localhost:4200/verify?email='+req.body.email,
           };
           // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") 
           transporter.sendMail(mailOptions, function (error, info) {
@@ -179,6 +179,62 @@ module.exports = function(params) {
           }
 
         
+      } catch (err) {
+  
+        res.send({
+          "code":400,
+          "result":"NOT SUCCESS",
+          "ERROR":err
+          })
+      }
+    });
+
+
+    // E-Mail Verification
+
+    app.post("/verifyRetaileremail", async (req, res) => {
+      "use strict";
+      try {
+
+        var getRetailerData = await userService.verifyEmail(req.body.email);
+
+        console.log(getRetailerData,"###############")
+
+        if(getRetailerData.length !== null)
+        {
+          getRetailerData.emailVerifiedStatus = 'true';
+
+          console.log(getRetailerData,"$$$$$$$$$$$$$$$$$$$$")
+
+          var updateRetailer = await userService.saveDetails(getRetailerData);
+
+          console.log(updateRetailer,"**************")
+
+          if(updateRetailer)
+          {
+          res.send({
+            "code":200,
+            "result":"SUCCESS",
+            "message":"Verification Success"
+            })
+          }
+          else
+          {
+          res.send({
+            "code":400,
+            "result":"NOT SUCCESS"
+            })
+          }
+       
+        } 
+        else
+        {
+          res.send({
+            "code":400,
+            "result":"NOT SUCCESS",
+            "message":"No Retailer Found"
+            })
+          }        
       } catch (err) {
   
         res.send({
