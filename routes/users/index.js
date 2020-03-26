@@ -25,9 +25,11 @@ module.exports = function(params) {
 
           return false
         }
-        
+        var retailerData = req.body
+        // console.log(retailerData,"retailerData @@@@@@@@@@@@@@@")
         retailerData.emailVerifiedStatus = "false";
-        var saveRetailer = await userService.saveDetails(req.body);
+        // console.log(retailerData,"retailerData +++++++++++++++++")
+        var saveRetailer = await userService.saveDetails(retailerData);
 
         // console.log(req.body,"req.body")
         // console.log(saveRetailer,"&&&&&&&&&&&&")
@@ -95,8 +97,6 @@ module.exports = function(params) {
 
         if(Retailerlogin.length>0)
         {
-
-          
         
           res.send({
           "code":200,
@@ -113,8 +113,6 @@ module.exports = function(params) {
             })
 
         }
-      
-      
        
       } catch (err) {
   
