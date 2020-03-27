@@ -27,54 +27,58 @@ module.exports = function(params) {
         }
 
         var retailerData = req.body
-        // console.log(retailerData,"retailerData @@@@@@@@@@@@@@@")
+
+        console.log(retailerData,"retailerData @@@@@@@@@@@@@@@")
+
         retailerData.emailVerifiedStatus = "false";
-        // console.log(retailerData,"retailerData +++++++++++++++++")
+        
+        console.log(retailerData,"retailerData +++++++++++++++++")
+        
         var saveRetailer = await userService.saveDetails(retailerData);
 
-        // console.log(req.body,"req.body")
-        // console.log(saveRetailer,"&&&&&&&&&&&&")
-        // console.log(req.body.email,"req.body.email")
-        // console.log(req.body.name,"req.body.name")
+        console.log(req.body,"req.body")
+        console.log(saveRetailer,"&&&&&&&&&&&&")
+        console.log(req.body.email,"req.body.email")
+        console.log(req.body.name,"req.body.name")
 
         if(saveRetailer)
         {
 
-        //   // console.log(saveRetailer,"**********")
+          console.log(saveRetailer,"**********")
 
-        //   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-        //   let transporter = nodeMailer.createTransport({
-        //       service: 'Gmail',
-        //       auth: {
-        //           user: 'vickyhbk93@gmail.com',
-        //           pass: 'vignesh001'
-        //       }
-        //   })
-        //   var mailOptions = {
-        //       from: 'vickyhbk93@gmail.com',
-        //       to: req.body.email,
-        //       subject: 'Retailer Verification',
-        //       text: 'Dear ' + req.body.name + 
-        //        ' click the link to verifiy your mailID '  
-        //                 // + ' http://3.12.144.160/emailverify ',
-        //                 + ' http://localhost:4200/verify?email='+req.body.email,
-        //   };
-        //   // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") 
-        //   transporter.sendMail(mailOptions, function (error, info) {
-        //       if (error) {
-        //           console.log(error, "errrrrrrrrrrrrrrrr");
-        //       } else {
-        //           console.log('Message Sent: ' + info.response);
-        //           res.send({
-        //             "code":200,
-        //             "result":"SUCCESS"
-        //             })
-        //       }
-        //   })
-        res.send({
-                      "code":200,
-                      "result":"SUCCESS"
-                      })
+          process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+          let transporter = nodeMailer.createTransport({
+              service: 'Gmail',
+              auth: {
+                  user: 'vickyhbk93@gmail.com',
+                  pass: 'vignesh001'
+              }
+          })
+          var mailOptions = {
+              from: 'vickyhbk93@gmail.com',
+              to: req.body.email,
+              subject: 'Retailer Verification',
+              text: 'Dear ' + req.body.name + 
+               ' click the link to verifiy your mailID '  
+                        // + ' http://3.12.144.160/emailverify ',
+                        + ' http://localhost:4200/verify?email='+req.body.email,
+          };
+          // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") 
+          transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                  console.log(error, "errrrrrrrrrrrrrrrr");
+              } else {
+                  console.log('Message Sent: ' + info.response);
+                  res.send({
+                    "code":200,
+                    "result":"SUCCESS"
+                    })
+              }
+          })
+        // res.send({
+        //               "code":200,
+        //               "result":"SUCCESS"
+        //               })
         }
         else
         {
