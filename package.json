@@ -43,7 +43,7 @@
     "npm": "^6.5.0",
     "razorpay": "^2.0.3",
     "sort-by": "^1.2.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
